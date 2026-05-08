@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Espetinho Da Morena</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--br:#1a0a00;--or:#e85d04;--go:#ffd60a}
+body{background:var(--br);font-family:'Lato',sans-serif;color:#fff;min-height:100vh;padding-bottom:145px}
+header{background:linear-gradient(160deg,#2d0f00,#1a0a00);text-align:center;padding:24px 16px 18px;border-bottom:3px solid var(--or)}
+header h1{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--go);letter-spacing:1px;text-shadow:0 2px 8px #0008}
+header p{color:#ffb347;font-size:.8rem;margin-top:4px;letter-spacing:2px;text-transform:uppercase}
+.sec{padding:14px 14px 4px;margin-top:6px}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--go);border-left:4px solid var(--or);padding-left:10px;margin-bottom:10px}
+.item{display:flex;align-items:center;justify-content:space-between;background:#2a1000;border-radius:12px;padding:11px 13px;margin-bottom:7px;border:1px solid #3d1800}
+.item-left{flex:1}
+.iname{font-size:.93rem;font-weight:700;color:#fff}
+.iprice{font-size:.82rem;color:var(--go);margin-top:2px}
+.qc{display:flex;align-items:center;gap:8px}
+.qc button{width:30px;height:30px;border-radius:50%;border:none;font-size:1.2rem;font-weight:700;cursor:pointer}
+.qc button:active{transform:scale(.88)}
+.bm{background:#3d1800;color:var(--go)}
+.bp{background:var(--or);color:#fff}
+.qn{min-width:22px;text-align:center;font-weight:700;font-size:1rem;color:#fff}
+.mesa-sec{padding:14px 14px 0}
+.mesa-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--go);border-left:4px solid var(--or);padding-left:10px;margin-bottom:10px}
+.mesas{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.mb{padding:9px 0;border-radius:10px;border:2px solid #3d1800;background:#2a1000;color:#bbb;font-weight:700;font-size:.88rem;cursor:pointer}
+.mb.sel{background:var(--or);border-color:var(--or);color:#fff}
+.obs-label{font-size:.8rem;color:#ffb347;margin-bottom:4px;display:block}
+.obs-box{background:#2a1000;border:1px solid #3d1800;border-radius:10px;width:100%;padding:10px 12px;color:#fff;font-size:.9rem;margin-top:10px;resize:none;height:56px}
+.obs-box::placeholder{color:#555}
+footer-bar{display:block;position:fixed;bottom:0;left:0;right:0;background:#1a0a00;border-top:3px solid var(--or);padding:10px 14px 12px}
+.tot-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.tot-label{color:#ffb347;font-size:.82rem}
+.tot-val{color:var(--go);font-family:'Playfair Display',serif;font-size:1.25rem}
+.send-btn{width:100%;padding:13px;background:linear-gradient(135deg,#25d366,#128c7e);border:none;border-radius:12px;color:#fff;font-size:.97rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
+.send-btn:active{opacity:.82}
+.send-btn svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
+.clr-btn{width:100%;margin-top:6px;padding:9px;background:transparent;border:1px solid #3d1800;border-radius:9px;color:#777;font-size:.82rem;cursor:pointer}
+.clr-btn:active{background:#2a1000}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🔥 Espetinho Da Morena</h1>
+  <p>Espetinhos feitos com carinho</p>
+</header>
+
+<div class="sec"><div class="sec-title">🍢 Espetinhos — R$ 8,50 un.</div><div id="s-esp"></div></div>
+<div class="sec"><div class="sec-title">🍽️ Guarnicoes</div><div id="s-gua"></div></div>
+<div class="sec"><div class="sec-title">🥤 Refrigerante Lata — R$ 5,00</div><div id="s-rl"></div></div>
+<div class="sec"><div class="sec-title">🥤 Refrigerante 1 Litro</div><div id="s-rg"></div></div>
+<div class="sec"><div class="sec-title">🍺 Cervejas</div><div id="s-cer"></div></div>
+
+<div class="mesa-sec">
+  <div class="mesa-title">🪑 Sua mesa</div>
+  <div class="mesas" id="mesas"></div>
+</div>
+
+<div class="sec" style="margin-top:4px">
+  <label class="obs-label">📝 Observacoes (opcional)</label>
+  <textarea class="obs-box" id="obs" placeholder="Ex: sem pimenta, bem passado..."></textarea>
+</div>
+
+<footer-bar>
+  <div class="tot-row">
+    <span class="tot-label">Total do pedido</span>
+    <span class="tot-val" id="total">R$ 0,00</span>
+  </div>
+  <button class="send-btn" onclick="enviar()">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.532 5.853L.057 23.59a.5.5 0 0 0 .614.612l5.878-1.525A11.937 11.937 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.808 9.808 0 0 1-5.031-1.385l-.36-.214-3.733.968.993-3.63-.235-.373A9.79 9.79 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+    Enviar Pedido pelo WhatsApp
+  </button>
+  <button class="clr-btn" onclick="limpar()">🗑️ Limpar pedido e fazer novo</button>
+</footer-bar>
+
+<script>
+var WA="5585992852704";
+
+// [secId, itemId, nome_display, nome_curto_msg, preco]
+var MENU=[
+  ["s-esp","e0","Fraldinha","Fraldinha",8.5],
+  ["s-esp","e1","Costela de porco","Costela porco",8.5],
+  ["s-esp","e2","Porco","Porco",8.5],
+  ["s-esp","e3","Frango","Frango",8.5],
+  ["s-esp","e4","Coracao de boi","Crc boi",8.5],
+  ["s-esp","e5","Coracao de frango","Crc frango",8.5],
+  ["s-esp","e6","Linguica","Linguica",8.5],
+  ["s-esp","e7","Tripa","Tripa",8.5],
+  ["s-gua","g0","Baiao G","Baiao G",14],
+  ["s-gua","g1","Baiao P","Baiao P",7],
+  ["s-gua","g2","Arroz camarao P","ArrCam P",12],
+  ["s-gua","g3","Arroz camarao G","ArrCam G",22],
+  ["s-gua","g4","Batata porcao","Batata",10],
+  ["s-rl","r0","Coca Cola lata","CC lata",5],
+  ["s-rl","r1","Coca Zero lata","CZ lata",5],
+  ["s-rl","r2","Fanta Uva lata","FU lata",5],
+  ["s-rl","r3","Fanta Laranja lata","FL lata",5],
+  ["s-rl","r4","Sprite lata","Sprite",5],
+  ["s-rg","R0","Coca-Cola 1L","Coca 1L",8],
+  ["s-rg","R1","Sao Geraldo 1L","SGeraldo",10],
+  ["s-cer","c0","Skol","Skol",7],
+  ["s-cer","c1","Brahma Duplo Malte","Brahma",7],
+  ["s-cer","c2","Budweiser","Budweiser",8],
+  ["s-cer","c3","Heineken","Heineken",9],
+  ["s-cer","c4","Corona","Corona",9]
+];
+
+var qtds={};
+var mesaSel=null;
+
+function fmt(v){return "R$"+v.toFixed(2).replace(".",",");}
+
+MENU.forEach(function(r){
+  qtds[r[1]]=0;
+  var sec=document.getElementById(r[0]);
+  var d=document.createElement("div");
+  d.className="item";
+  d.innerHTML='<div class="item-left"><div class="iname">'+r[2]+'</div><div class="iprice">'+fmt(r[4])+'</div></div>'
+    +'<div class="qc">'
+    +'<button class="bm" onclick="ch(\''+r[1]+'\',-1)">-</button>'
+    +'<span class="qn" id="q'+r[1]+'">0</span>'
+    +'<button class="bp" onclick="ch(\''+r[1]+'\',1)">+</button>'
+    +'</div>';
+  sec.appendChild(d);
+});
+
+function ch(id,d){
+  qtds[id]=Math.max(0,qtds[id]+d);
+  document.getElementById("q"+id).textContent=qtds[id];
+  recalc();
+}
+
+function recalc(){
+  var t=0;
+  MENU.forEach(function(r){t+=qtds[r[1]]*r[4];});
+  document.getElementById("total").textContent=fmt(t);
+}
+
+var mDiv=document.getElementById("mesas");
+for(var i=1;i<=15;i++){
+  (function(n){
+    var b=document.createElement("button");
+    b.className="mb"; b.id="m"+n; b.textContent="Mesa "+n;
+    b.onclick=function(){selMesa(n);};
+    mDiv.appendChild(b);
+  })(i);
+}
+
+function selMesa(n){
+  if(mesaSel)document.getElementById("m"+mesaSel).classList.remove("sel");
+  mesaSel=n;
+  document.getElementById("m"+n).classList.add("sel");
+}
+
+function enviar(){
+  if(!mesaSel){alert("Selecione sua mesa!");return;}
+  var itens=MENU.filter(function(r){return qtds[r[1]]>0;});
+  if(!itens.length){alert("Adicione pelo menos 1 item!");return;}
+
+  var total=0;
+  // Mensagem compacta: sem emojis no corpo, nomes curtos = URL menor
+  var linhas=itens.map(function(r){
+    var sub=qtds[r[1]]*r[4];
+    total+=sub;
+    return qtds[r[1]]+"x "+r[3]+" "+fmt(sub);
+  });
+
+  var obs=document.getElementById("obs").value.trim();
+  var now=new Date(),hora=now.getHours().toString().padStart(2,"0")+":"+now.getMinutes().toString().padStart(2,"0");
+  var msg="*PEDIDO - Espetinho Da Morena*\nMesa: "+mesaSel+" | Horario: "+hora+"\n\n"
+    +linhas.join("\n")
+    +"\n\nTOTAL: "+fmt(total);
+  if(obs)msg+="\nObs: "+obs;
+
+  var url="https://wa.me/"+WA+"?text="+encodeURIComponent(msg);
+  window.open(url,"_blank");
+}
+
+function limpar(){
+  MENU.forEach(function(r){
+    qtds[r[1]]=0;
+    document.getElementById("q"+r[1]).textContent="0";
+  });
+  if(mesaSel){document.getElementById("m"+mesaSel).classList.remove("sel");mesaSel=null;}
+  document.getElementById("obs").value="";
+  document.getElementById("total").textContent="R$ 0,00";
+}
+</script>
+</body>
+</html>

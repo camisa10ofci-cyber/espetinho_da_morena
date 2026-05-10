@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Espetinho Da Morena</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--br:#1a0a00;--or:#e85d04;--go:#ffd60a}
+body{background:var(--br);font-family:'Lato',sans-serif;color:#fff;min-height:100vh;padding-bottom:160px}
+header{background:linear-gradient(160deg,#2d0f00,#1a0a00);text-align:center;padding:24px 16px 18px;border-bottom:3px solid var(--or)}
+header h1{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--go);letter-spacing:1px}
+header p{color:#ffb347;font-size:.8rem;margin-top:4px;letter-spacing:2px;text-transform:uppercase}
+.sec{padding:14px 14px 4px;margin-top:6px}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--go);border-left:4px solid var(--or);padding-left:10px;margin-bottom:10px}
+.item{display:flex;align-items:center;justify-content:space-between;background:#2a1000;border-radius:12px;padding:11px 13px;margin-bottom:7px;border:1px solid #3d1800}
+.item-left{flex:1}
+.iname{font-size:.93rem;font-weight:700;color:#fff}
+.iprice{font-size:.82rem;color:var(--go);margin-top:2px}
+.qc{display:flex;align-items:center;gap:8px}
+.qc button{width:30px;height:30px;border-radius:50%;border:none;font-size:1.2rem;font-weight:700;cursor:pointer}
+.qc button:active{transform:scale(.88)}
+.bm{background:#3d1800;color:var(--go)}
+.bp{background:var(--or);color:#fff}
+.qn{min-width:22px;text-align:center;font-weight:700;font-size:1rem;color:#fff}
+.mesa-sec{padding:14px 14px 0}
+.mesa-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--go);border-left:4px solid var(--or);padding-left:10px;margin-bottom:10px}
+.mesas{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.mb{padding:9px 0;border-radius:10px;border:2px solid #3d1800;background:#2a1000;color:#bbb;font-weight:700;font-size:.88rem;cursor:pointer}
+.mb.sel{background:var(--or);border-color:var(--or);color:#fff}
+.lbl{font-size:.8rem;color:#ffb347;margin-bottom:4px;display:block}
+.inp{background:#2a1000;border:1px solid #3d1800;border-radius:10px;width:100%;padding:10px 12px;color:#fff;font-size:.9rem;margin-top:4px}
+.inp::placeholder{color:#555}
+.obs-box{background:#2a1000;border:1px solid #3d1800;border-radius:10px;width:100%;padding:10px 12px;color:#fff;font-size:.9rem;margin-top:4px;resize:none;height:50px}
+.obs-box::placeholder{color:#555}
+
+/* Pedidos salvos */
+.pedidos-box{margin:14px;background:#1c0500;border:1px solid #3d1800;border-radius:12px;padding:12px}
+.pedidos-title{color:var(--go);font-weight:700;font-size:.95rem;margin-bottom:8px}
+.pedido-item{background:#2a1000;border-radius:8px;padding:8px 10px;margin-bottom:6px;border-left:3px solid var(--or)}
+.pedido-nome{color:var(--go);font-weight:700;font-size:.85rem}
+.pedido-itens{color:#ccc;font-size:.78rem;margin-top:2px}
+.pedido-total{color:#ffb347;font-size:.82rem;margin-top:2px;font-weight:700}
+.pedido-vazio{color:#555;font-size:.82rem;text-align:center;padding:8px}
+
+footer-bar{display:block;position:fixed;bottom:0;left:0;right:0;background:#1a0a00;border-top:3px solid var(--or);padding:10px 14px 12px}
+.tot-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.tot-label{color:#ffb347;font-size:.82rem}
+.tot-val{color:var(--go);font-family:'Playfair Display',serif;font-size:1.25rem}
+.add-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--or),#c04000);border:none;border-radius:12px;color:#fff;font-size:.97rem;font-weight:700;cursor:pointer;margin-bottom:7px}
+.send-btn{width:100%;padding:13px;background:linear-gradient(135deg,#25d366,#128c7e);border:none;border-radius:12px;color:#fff;font-size:.97rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
+.send-btn svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
+.add-btn:active,.send-btn:active{opacity:.82}
+.clr-btn{width:100%;margin-top:6px;padding:9px;background:transparent;border:1px solid #3d1800;border-radius:9px;color:#777;font-size:.82rem;cursor:pointer}
+
+/* Modal confirmação */
+.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#000a;z-index:999;align-items:center;justify-content:center}
+.modal.show{display:flex}
+.modal-box{background:#1c0500;border:2px solid var(--or);border-radius:16px;padding:24px 20px;max-width:320px;width:90%;text-align:center}
+.modal-title{color:var(--go);font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:10px}
+.modal-txt{color:#ccc;font-size:.88rem;margin-bottom:18px;line-height:1.5}
+.modal-nome{color:var(--or);font-weight:700;font-size:1rem}
+.modal-total{color:var(--go);font-weight:700;font-size:1.1rem;margin:8px 0}
+.modal-btns{display:flex;gap:10px}
+.modal-btn1{flex:1;padding:12px;background:var(--or);border:none;border-radius:10px;color:#fff;font-weight:700;cursor:pointer;font-size:.9rem}
+.modal-btn2{flex:1;padding:12px;background:#2a1000;border:1px solid #3d1800;border-radius:10px;color:#ccc;font-weight:700;cursor:pointer;font-size:.9rem}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🔥 Espetinho Da Morena</h1>
+  <p>Espetinhos feitos com carinho</p>
+</header>
+
+<div class="sec"><div class="sec-title">🍢 Espetinhos — R$ 8,50 un.</div><div id="s-esp"></div></div>
+<div class="sec"><div class="sec-title">🍽️ Guarnicoes</div><div id="s-gua"></div></div>
+<div class="sec"><div class="sec-title">🥤 Refrigerante Lata — R$ 5,00</div><div id="s-rl"></div></div>
+<div class="sec"><div class="sec-title">🥤 Refrigerante 1 Litro</div><div id="s-rg"></div></div>
+<div class="sec"><div class="sec-title">🍺 Cervejas</div><div id="s-cer"></div></div>
+<div class="sec"><div class="sec-title">🥃 Cachacas</div><div id="s-cach"></div></div>
+
+<div class="mesa-sec">
+  <div class="mesa-title">🪑 Sua mesa</div>
+  <div class="mesas" id="mesas"></div>
+</div>
+
+<div class="sec" style="margin-top:8px">
+  <label class="lbl">👤 Seu nome</label>
+  <input class="inp" id="nome" placeholder="Ex: Joao, Maria..." type="text">
+  <label class="lbl" style="margin-top:10px">📝 Observacoes (opcional)</label>
+  <textarea class="obs-box" id="obs" placeholder="Ex: sem pimenta, bem passado..."></textarea>
+</div>
+
+<!-- Pedidos salvos -->
+<div class="pedidos-box" id="pedidos-box" style="display:none">
+  <div class="pedidos-title">📋 Pedidos desta mesa:</div>
+  <div id="lista-pedidos"></div>
+  <div style="margin-top:8px;padding-top:8px;border-top:1px solid #3d1800;display:flex;justify-content:space-between">
+    <span style="color:#ffb347;font-size:.85rem">Total geral da mesa:</span>
+    <span style="color:var(--go);font-weight:700;font-size:.95rem" id="total-geral">R$ 0,00</span>
+  </div>
+</div>
+
+<footer-bar>
+  <div class="tot-row">
+    <span class="tot-label">Total do seu pedido</span>
+    <span class="tot-val" id="total">R$ 0,00</span>
+  </div>
+  <button class="add-btn" onclick="confirmarPedido()">✅ Confirmar meu pedido e continuar</button>
+  <button class="send-btn" onclick="enviarTudo()">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.532 5.853L.057 23.59a.5.5 0 0 0 .614.612l5.878-1.525A11.937 11.937 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.808 9.808 0 0 1-5.031-1.385l-.36-.214-3.733.968.993-3.63-.235-.373A9.79 9.79 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+    Fechar conta e enviar tudo
+  </button>
+  <button class="clr-btn" onclick="limparTudo()">🗑️ Cancelar tudo e recomecar</button>
+</footer-bar>
+
+<!-- Modal confirmacao -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-title">✅ Pedido confirmado!</div>
+    <div class="modal-txt">
+      Pedido de <span class="modal-nome" id="m-nome"></span> salvo!<br>
+      <span class="modal-total" id="m-total"></span><br><br>
+      Tem mais alguem na mesa para pedir?
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn1" onclick="fecharModal()">➕ Sim, proximo pedido</button>
+      <button class="modal-btn2" onclick="fecharModalEnviar()">📲 Nao, enviar tudo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var WA="5585992852704";
+
+var MENU=[
+  ["s-esp","e0","Fraldinha","Fraldinha",8.5],
+  ["s-esp","e1","Costela de porco","Costela porco",8.5],
+  ["s-esp","e2","Porco","Porco",8.5],
+  ["s-esp","e3","Frango","Frango",8.5],
+  ["s-esp","e4","Coracao de boi","Crc boi",8.5],
+  ["s-esp","e5","Coracao de frango","Crc frango",8.5],
+  ["s-esp","e6","Linguica","Linguica",8.5],
+  ["s-esp","e7","Tripa","Tripa",8.5],
+  ["s-gua","g0","Baiao G","Baiao G",14],
+  ["s-gua","g0b","Baiao P","Baiao P",7],
+  ["s-gua","g0c","Baiao porcao P","Baiao porc P",4],
+  ["s-gua","g1","Arroz camarao P","ArrCam P",12],
+  ["s-gua","g2","Arroz camarao G","ArrCam G",22],
+  ["s-gua","g3","Batata porcao","Batata",10],
+  ["s-rl","r0","Coca Cola lata","CC lata",5],
+  ["s-rl","r1","Coca Zero lata","CZ lata",5],
+  ["s-rl","r2","Fanta Uva lata","FU lata",5],
+  ["s-rl","r3","Fanta Laranja lata","FL lata",5],
+  ["s-rl","r4","Sprite lata","Sprite",5],
+  ["s-rg","R0","Coca-Cola 1L","Coca 1L",8],
+  ["s-rg","R1","Sao Geraldo 1L","SGeraldo",10],
+  ["s-cer","c0","Skol","Skol",5],
+  ["s-cer","c1","Brahma Duplo Malte","Brahma",5],
+  ["s-cer","c2","Budweiser","Budweiser",8],
+  ["s-cer","c3","Heineken","Heineken",9],
+  ["s-cer","c4","Corona","Corona",9],
+  ["s-cach","ca0","Ypioca Prata terca","Ypioca Prata",6],
+  ["s-cach","ca1","Ypioca Ouro terca","Ypioca Ouro",7],
+  ["s-cach","ca2","Ypioca Prata meiota","Ypioca Prata 1/2",12],
+  ["s-cach","ca3","Ypioca Ouro meiota","Ypioca Ouro 1/2",14],
+  ["s-cach","ca4","51 Amarela terca","51 Amarela",7],
+  ["s-cach","ca5","51 Amarela meiota","51 Amarela 1/2",14]
+];
+
+var qtds={};
+var mesaSel=null;
+var pedidos=[]; // lista de pedidos salvos
+
+function fmt(v){return "R$"+v.toFixed(2).replace(".",",");}
+
+MENU.forEach(function(r){
+  qtds[r[1]]=0;
+  var sec=document.getElementById(r[0]);
+  var d=document.createElement("div");
+  d.className="item";
+  d.innerHTML='<div class="item-left"><div class="iname">'+r[2]+'</div><div class="iprice">'+fmt(r[4])+'</div></div>'
+    +'<div class="qc">'
+    +'<button class="bm" onclick="ch(\''+r[1]+'\',-1)">-</button>'
+    +'<span class="qn" id="q'+r[1]+'">0</span>'
+    +'<button class="bp" onclick="ch(\''+r[1]+'\',1)">+</button>'
+    +'</div>';
+  sec.appendChild(d);
+});
+
+function ch(id,d){
+  qtds[id]=Math.max(0,qtds[id]+d);
+  document.getElementById("q"+id).textContent=qtds[id];
+  recalc();
+}
+
+function recalc(){
+  var t=0;
+  MENU.forEach(function(r){t+=qtds[r[1]]*r[4];});
+  document.getElementById("total").textContent=fmt(t);
+}
+
+var mDiv=document.getElementById("mesas");
+for(var i=1;i<=15;i++){
+  (function(n){
+    var b=document.createElement("button");
+    b.className="mb"; b.id="m"+n; b.textContent="Mesa "+n;
+    b.onclick=function(){selMesa(n);};
+    mDiv.appendChild(b);
+  })(i);
+}
+
+function selMesa(n){
+  if(mesaSel)document.getElementById("m"+mesaSel).classList.remove("sel");
+  mesaSel=n;
+  document.getElementById("m"+n).classList.add("sel");
+}
+
+function confirmarPedido(){
+  if(!mesaSel){alert("Selecione sua mesa!");return;}
+  var nome=document.getElementById("nome").value.trim();
+  if(!nome){alert("Por favor, coloque seu nome!");return;}
+  var itens=MENU.filter(function(r){return qtds[r[1]]>0;});
+  if(!itens.length){alert("Adicione pelo menos 1 item!");return;}
+
+  var total=0;
+  var linhas=itens.map(function(r){
+    var sub=qtds[r[1]]*r[4]; total+=sub;
+    return qtds[r[1]]+"x "+r[3]+" "+fmt(sub);
+  });
+  var obs=document.getElementById("obs").value.trim();
+
+  // Salva pedido
+  pedidos.push({nome:nome, itens:linhas, total:total, obs:obs});
+
+  // Mostra modal
+  document.getElementById("m-nome").textContent=nome;
+  document.getElementById("m-total").textContent=fmt(total);
+  document.getElementById("modal").classList.add("show");
+
+  // Zera itens e campos mas mantém mesa
+  MENU.forEach(function(r){
+    qtds[r[1]]=0;
+    document.getElementById("q"+r[1]).textContent="0";
+  });
+  document.getElementById("nome").value="";
+  document.getElementById("obs").value="";
+  document.getElementById("total").textContent="R$ 0,00";
+
+  // Atualiza lista de pedidos salvos
+  atualizarLista();
+}
+
+function atualizarLista(){
+  var box=document.getElementById("pedidos-box");
+  var lista=document.getElementById("lista-pedidos");
+  if(!pedidos.length){box.style.display="none";return;}
+  box.style.display="block";
+  lista.innerHTML="";
+  var totalGeral=0;
+  pedidos.forEach(function(p){
+    totalGeral+=p.total;
+    var d=document.createElement("div");
+    d.className="pedido-item";
+    d.innerHTML='<div class="pedido-nome">👤 '+p.nome+'</div>'
+      +'<div class="pedido-itens">'+p.itens.join(" | ")+'</div>'
+      +(p.obs?'<div class="pedido-itens">Obs: '+p.obs+'</div>':'')
+      +'<div class="pedido-total">'+fmt(p.total)+'</div>';
+    lista.appendChild(d);
+  });
+  document.getElementById("total-geral").textContent=fmt(totalGeral);
+}
+
+function fecharModal(){
+  document.getElementById("modal").classList.remove("show");
+}
+
+function fecharModalEnviar(){
+  document.getElementById("modal").classList.remove("show");
+  enviarTudo();
+}
+
+function enviarTudo(){
+  if(!pedidos.length){alert("Nenhum pedido salvo ainda!");return;}
+  if(!mesaSel){alert("Selecione sua mesa!");return;}
+
+  var now=new Date();
+  var hora=now.getHours().toString().padStart(2,"0")+":"+now.getMinutes().toString().padStart(2,"0");
+
+  var totalGeral=0;
+  var msg="*PEDIDO - Espetinho Da Morena*\nMesa: "+mesaSel+" | Horario: "+hora+"\n";
+  msg+="================================\n";
+
+  pedidos.forEach(function(p,i){
+    totalGeral+=p.total;
+    msg+="\n*Pedido "+(i+1)+" - "+p.nome+"*\n";
+    p.itens.forEach(function(it){msg+=it+"\n";});
+    if(p.obs)msg+="Obs: "+p.obs+"\n";
+    msg+="Subtotal: "+fmt(p.total)+"\n";
+    msg+="--------------------------------\n";
+  });
+
+  msg+="\n*TOTAL GERAL: "+fmt(totalGeral)+"*";
+
+  var url="https://wa.me/"+WA+"?text="+encodeURIComponent(msg);
+  window.open(url,"_blank");
+}
+
+function limparTudo(){
+  MENU.forEach(function(r){
+    qtds[r[1]]=0;
+    document.getElementById("q"+r[1]).textContent="0";
+  });
+  if(mesaSel){document.getElementById("m"+mesaSel).classList.remove("sel");mesaSel=null;}
+  document.getElementById("nome").value="";
+  document.getElementById("obs").value="";
+  document.getElementById("total").textContent="R$ 0,00";
+  pedidos=[];
+  atualizarLista();
+}
+</script>
+</body>
+</html>
